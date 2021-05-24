@@ -59,8 +59,13 @@ export const createUserTask = async (req: Request, res: Response): Promise<Respo
 }
 
 export const getUserTask = async (req: Request, res: Response): Promise<Response> => {
-    const todolists = await getRepository(Todolist).findOne(req.params.id);
-    return res.json(todolists);
+    const users = await getRepository(Users).findOne(req.params.id);
+     if (!users) {
+       return res.json("no existe usuario");  
+     }else {
+        const results = await getRepository(Todolist).find({ where: { users:users }});
+        return res.json(results);
+    }
 }
 
 export const upDataTask = async (req: Request, res: Response): Promise<Response> => {

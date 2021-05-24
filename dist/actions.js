@@ -140,13 +140,18 @@ var createUserTask = function (req, res) { return __awaiter(void 0, void 0, void
 }); };
 exports.createUserTask = createUserTask;
 var getUserTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var todolists;
+    var users, results;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Todolist_1.Todolist).findOne(req.params.id)];
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Users_1.Users).findOne(req.params.id)];
             case 1:
-                todolists = _a.sent();
-                return [2 /*return*/, res.json(todolists)];
+                users = _a.sent();
+                if (!!users) return [3 /*break*/, 2];
+                return [2 /*return*/, res.json("no existe usuario")];
+            case 2: return [4 /*yield*/, typeorm_1.getRepository(Todolist_1.Todolist).find({ where: { users: users } })];
+            case 3:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
         }
     });
 }); };
