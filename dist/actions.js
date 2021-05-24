@@ -36,10 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getUsers = exports.createUser = void 0;
+exports.upDataTask = exports.getUserTask = exports.createUserTask = exports.deleteUsers = exports.getUsers = exports.createUser = void 0;
 var typeorm_1 = require("typeorm"); // getRepository"  traer una tabla de la base de datos asociada al objeto
 var Users_1 = require("./entities/Users");
 var utils_1 = require("./utils");
+var Todolist_1 = require("./entities/Todolist");
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var userRepo, user, newUser, results;
     return __generator(this, function (_a) {
@@ -81,3 +82,78 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getUsers = getUsers;
+//eliminar usuario
+var deleteUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var users, results, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Users_1.Users).findOne(req.params.id)];
+            case 1:
+                users = _a.sent();
+                if (!!users) return [3 /*break*/, 2];
+                return [2 /*return*/, res.json({ "message": "the user not find" })];
+            case 2: return [4 /*yield*/, typeorm_1.getRepository(Todolist_1.Todolist)["delete"]({ users: users })];
+            case 3:
+                results = _a.sent();
+                return [4 /*yield*/, typeorm_1.getRepository(Users_1.Users)["delete"](req.params.id)];
+            case 4:
+                result = _a.sent();
+                return [2 /*return*/, res.json(result)];
+        }
+    });
+}); };
+exports.deleteUsers = deleteUsers;
+var createUserTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var UserTask, userTasks, newUserTask, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                // important validations to avoid ambiguos errors, the client needs to understand what went wrong
+                if (!req.body.label)
+                    throw new utils_1.Exception("Please provide a label");
+                UserTask = typeorm_1.getRepository(Users_1.Users) //busco usuario
+                ;
+                return [4 /*yield*/, UserTask.findOne({ where: { id: req.params.id } })];
+            case 1:
+                userTasks = _a.sent();
+                if (!userTasks) return [3 /*break*/, 3];
+                newUserTask = typeorm_1.getRepository(Todolist_1.Todolist).create({ label: req.body.label, users: userTasks, done: false });
+                return [4 /*yield*/, typeorm_1.getRepository(Todolist_1.Todolist).save(newUserTask)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+            case 3: return [2 /*return*/, res.json("Error")];
+        }
+    });
+}); };
+exports.createUserTask = createUserTask;
+var getUserTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var todolists;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Todolist_1.Todolist).findOne(req.params.id)];
+            case 1:
+                todolists = _a.sent();
+                return [2 /*return*/, res.json(todolists)];
+        }
+    });
+}); };
+exports.getUserTask = getUserTask;
+var upDataTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var task, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Todolist_1.Todolist).findOne(req.params.id)];
+            case 1:
+                task = _a.sent();
+                if (!task) return [3 /*break*/, 3];
+                typeorm_1.getRepository(Todolist_1.Todolist).merge(task, req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(Todolist_1.Todolist).save(task)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+            case 3: return [2 /*return*/, res.json("Not task found")];
+        }
+    });
+}); };
+exports.upDataTask = upDataTask;

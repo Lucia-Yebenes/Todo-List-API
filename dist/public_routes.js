@@ -10,7 +10,14 @@ exports.__esModule = true;
 var express_1 = require("express");
 var utils_1 = require("./utils");
 var actions_1 = require("./actions");
+var actions_2 = require("./actions");
+var actions_3 = require("./actions");
+var actions_4 = require("./actions");
 var router = express_1.Router();
 // signup route, creates a new user in the DB
 router.post('/user', utils_1.safe(actions_1.createUser));
+//crear una todolist
+router.post('/todolist/:id', utils_1.safe(actions_2.createUserTask));
+router.get('/todolist/:id', utils_1.safe(actions_3.getUserTask));
+router.put('/todolist/:id', utils_1.safe(actions_4.upDataTask));
 exports["default"] = router;

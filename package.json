@@ -18,8 +18,10 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "node-env-file": "^0.1.8",
+    "npm": "^7.14.0",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
+    "start": "^5.1.0",
     "tsc-watch": "^4.2.9",
     "typeorm": "^0.2.32"
   },

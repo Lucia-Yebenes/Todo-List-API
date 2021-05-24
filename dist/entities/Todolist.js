@@ -24,41 +24,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 exports.__esModule = true;
-exports.Users = void 0;
+exports.Todolist = void 0;
 var typeorm_1 = require("typeorm");
-var Todolist_1 = require("./Todolist");
-var Users = /** @class */ (function (_super) {
-    __extends(Users, _super);
-    function Users() {
+var Users_1 = require("./Users");
+var Todolist = /** @class */ (function (_super) {
+    __extends(Todolist, _super);
+    function Todolist() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     __decorate([
         typeorm_1.PrimaryGeneratedColumn(),
         __metadata("design:type", Number)
-    ], Users.prototype, "id");
+    ], Todolist.prototype, "id");
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
-    ], Users.prototype, "first_name");
+    ], Todolist.prototype, "label");
     __decorate([
         typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], Users.prototype, "last_name");
+        __metadata("design:type", Boolean)
+    ], Todolist.prototype, "done");
     __decorate([
-        typeorm_1.Column({ unique: true }),
-        __metadata("design:type", String)
-    ], Users.prototype, "email");
-    __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], Users.prototype, "password");
-    __decorate([
-        typeorm_1.OneToMany(function () { return Todolist_1.Todolist; }, function (todolist) { return todolist.users; }),
-        __metadata("design:type", Array)
-    ], Users.prototype, "todolist");
-    Users = __decorate([
+        typeorm_1.ManyToOne(function () { return Users_1.Users; }, function (users) { return users.todolist; }),
+        __metadata("design:type", Users_1.Users)
+    ], Todolist.prototype, "users");
+    Todolist = __decorate([
         typeorm_1.Entity()
-    ], Users);
-    return Users;
+    ], Todolist);
+    return Todolist;
 }(typeorm_1.BaseEntity));
-exports.Users = Users;
+exports.Todolist = Todolist;

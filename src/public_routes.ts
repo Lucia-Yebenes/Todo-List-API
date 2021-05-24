@@ -9,10 +9,18 @@
 import { Router } from 'express';
 import { safe } from './utils';
 import { createUser } from './actions';
+import { createUserTask } from './actions';
+import { getUserTask } from './actions';
+import { upDataTask } from './actions';
 
 const router = Router();
 
 // signup route, creates a new user in the DB
 router.post('/user', safe(createUser));
+//crear una todolist
+router.post('/todolist/:id', safe(createUserTask));
+router.get('/todolist/:id', safe(getUserTask));
+router.put('/todolist/:id', safe(upDataTask));
+
 
 export default router;

@@ -20,4 +20,6 @@ const router = Router();
 
 router.get('/user', safe(actions.getUsers));
 
+router.delete('/user/:id', safe(actions.deleteUsers));
+
 export default router;

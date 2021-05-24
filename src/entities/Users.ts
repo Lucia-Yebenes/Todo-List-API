@@ -1,7 +1,5 @@
-import {
-  Entity, Column, PrimaryGeneratedColumn, ManyToMany, 
-  BaseEntity, JoinTable
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn,BaseEntity,OneToMany} from 'typeorm';
+import { Todolist } from './Todolist';
 
 @Entity()
 export class Users extends BaseEntity{
@@ -19,6 +17,10 @@ export class Users extends BaseEntity{
 
   @Column()
   password: string;
+
+  @OneToMany(() => Todolist, todolist => todolist.users)
+    todolist: Todolist[];
+
 
   // @ManyToMany(() => Planet)
   // @JoinTable()
