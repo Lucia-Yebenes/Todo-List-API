@@ -26,6 +26,11 @@ export const getUsers = async (req: Request, res: Response): Promise<Response> =
     const users = await getRepository(Users).find();
     return res.json(users);
 }
+
+export const getOneUsers = async (req: Request, res: Response): Promise<Response> => {
+    const users = await getRepository(Users).findOne(req.params.id);
+    return res.json(users);
+}
 //eliminar usuario
 export const deleteUsers = async (req: Request, res: Response): Promise<Response> => {
     const users = await getRepository(Users).findOne(req.params.id);

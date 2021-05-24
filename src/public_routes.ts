@@ -11,7 +11,8 @@ import { safe } from './utils';
 import { createUser } from './actions';
 import { createUserTask } from './actions';
 import { getUserTask } from './actions';
-import { upDataTask } from './actions';
+import { upDataTask, } from './actions';
+import { getOneUsers } from './actions';
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.post('/user', safe(createUser));
 //crear una todolist
 router.post('/todolist/:id', safe(createUserTask));
 router.get('/todolist/:id', safe(getUserTask));
+router.get('/user/:id', safe(getOneUsers));
 router.put('/todolist/:id', safe(upDataTask));
 
 
